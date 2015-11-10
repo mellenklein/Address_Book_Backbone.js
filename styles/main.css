@@ -1,0 +1,80 @@
+html {
+  box-sizing: border-box; }
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit; }
+
+body {
+  font-family: 'Helvetica' sans-serif;
+  height: 100%;
+  margin: 0; }
+
+header {
+  background: #F16059;
+  overflow: auto; }
+  header h2 {
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    color: white; }
+  header p {
+    display: inline-block;
+    margin-left: 20px; }
+  header a {
+    font-size: 1.2em;
+    font-weight: 800;
+    margin: 0 auto;
+    color: white;
+    padding: 0 10px 10px;
+    text-decoration: none;
+    transition: color 0.5s ease; }
+    header a:hover {
+      color: gray;
+      transition: color 0.5s ease; }
+
+.form {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 40.29137%;
+  margin: 25px 10px; }
+  .form:last-child {
+    margin-right: 0; }
+
+input {
+  display: inline-block;
+  margin: 10px auto;
+  font-size: 1em;
+  padding: 10px;
+  color: #F16059; }
+
+.email {
+  clear: both; }
+
+.send {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+  background: #F16059;
+  display: block;
+  width: 25%;
+  text-align: center;
+  margin: 0;
+  margin-left: 62%;
+  transition: background 0.5s ease, color 0.5s ease; }
+  .send:hover {
+    background: pink;
+    color: gray;
+    transition: background 0.5s ease, color 0.5s ease; }
+
+.list {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 57.35098%; }
+  .list:last-child {
+    margin-right: 0; }

@@ -1,0 +1,76 @@
+@import "../bower_components/bourbon/app/assets/stylesheets/bourbon";
+@import "../bower_components/neat/app/assets/stylesheets/neat";
+
+body {
+  font-family: 'Helvetica' sans-serif;
+  height: 100%;
+  margin: 0;
+}
+header {
+  background: #F16059;
+  overflow: auto;
+  h2 {
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    color: white;
+  }
+  p {
+    display: inline-block;
+    margin-left: 20px;
+  }
+  a {
+    font-size: 1.2em;
+    font-weight: 800;
+    margin: 0 auto;
+    color: white;
+    padding: 0 10px 10px;
+    text-decoration: none;
+    transition: color 0.5s ease;
+    &:hover {
+      color: gray;
+      transition: color 0.5s ease;
+    }
+  }
+}
+
+.form {
+  @include span-columns(5 of 12);
+  // width: 40%;
+  margin: 25px 10px;
+}
+input {
+  display: inline-block;
+  margin: 10px auto;
+  font-size: 1em;
+  padding: 10px;
+  color: #F16059;
+}
+
+.email {
+  clear:both;
+}
+
+.send {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+  background: #F16059;
+  display: block;
+  width: 25%;
+  text-align: center;
+  margin: 0;
+  margin-left: 62%;
+  transition: background 0.5s ease, color 0.5s ease;
+  &:hover {
+    background: pink;
+    color: gray;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+}
+
+.list {
+  @include span-columns(7 of 12);
+}
