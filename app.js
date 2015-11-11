@@ -12,6 +12,7 @@ var Contact = Backbone.Model.extend({
 });
 
 var ContactList = Backbone.Collection.extend({
+  model: Contact,
   url: 'http://tiny-starburst.herokuapp.com/collections/contactsmel'
 });
 
@@ -22,6 +23,18 @@ var ContactList = Backbone.Collection.extend({
 var HomePage = Backbone.View.extend({
   tagName: 'p',
   template: _.template($('#homePageTemplate').html()),
+  events: {
+    'click .home': 'handleHomeClick'
+  },
+  handleHomeClick: function(){
+    console.log('you clicked the Home button!');
+    $('.formDisplay').html(form.el);
+    contactList.fetch({
+      success: function(){
+        $('.listDisplay').html(addressBook.el);
+      }
+    });
+  },
   render: function(){
     this.$el.html(this.template());
     return this;
@@ -42,21 +55,22 @@ var ContactDetail = Backbone.View.extend({
 var AddressBook = Backbone.View.extend({
   tagName: 'section',
   className: 'list',
-  events: {
-    'change model': 'render'
-  },
+  // events: {
+  //   'click .send': 'render'
+  // },
   initialize: function(){
     this.listenTo(this.collection, 'fetch sync', this.render);
+    // this.listenTo(this.model, 'change', this.render);
   },
 
   render: function(){
     var view = this;
-
     this.collection.each(function(model){
       var contact = new ContactDetail({
         model: model
       });
       contact.render();
+      // console.log(contact.el)
       view.$el.append(contact.el);
     });
   }
@@ -88,7 +102,7 @@ var Form = Backbone.View.extend({
       alert('Email address is required');
       return;
     }
-    var person = new Person({
+    var contact = new Contact({
       firstName: first,
       lastName: last,
       phone: phone,
@@ -96,7 +110,10 @@ var Form = Backbone.View.extend({
       twitter: twitter,
       linkedin: linkedin
     });
-    person.save();
+    contact.save();
+
+    contactList.add(contact);
+
     this.$('input').val('');
     alert('Success! Your contact was saved to the address book.');
   },
@@ -125,13 +142,12 @@ var Router = Backbone.Router.extend({
   home: function(){
     var mainView = new HomePage();
     mainView.render();
-    $('header').append(mainView.el);
+    $('header').html(mainView.el);
   },
   viewContact(contactId){
     var model = new Contact({
       id: contactId
     });
-
     model.fetch().then(function(){
       var view = new ContactDetail({
         model: model
@@ -150,23 +166,21 @@ var Router = Backbone.Router.extend({
 ///////////////////////////////
 
 
-
-
-var router = new Router();
-Backbone.history.start();
-
-var form = new Form();
-form.render();
-$('main').append(form.el);
-
 var contactList = new ContactList();
 
 var addressBook = new AddressBook({
   collection: contactList
 });
 
+var form = new Form();
+form.render();
+$('.formDisplay').html(form.el);
+
 contactList.fetch({
   success: function(){
-    $('main').append(addressBook.el);
+    $('.listDisplay').html(addressBook.el);
   }
 });
+
+var router = new Router();
+Backbone.history.start();
