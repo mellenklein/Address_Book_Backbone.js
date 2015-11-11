@@ -65,11 +65,10 @@ input {
   text-align: center;
   margin: 0;
   margin-left: 62%;
-  transition: background 0.5s ease, color 0.5s ease; }
+  transition: background 0.5s ease; }
   .send:hover {
-    background: pink;
-    color: gray;
-    transition: background 0.5s ease, color 0.5s ease; }
+    background: #e9a19d;
+    transition: background 0.5s ease; }
 
 .list {
   float: left;
@@ -78,3 +77,17 @@ input {
   width: 57.35098%; }
   .list:last-child {
     margin-right: 0; }
+  .list ul {
+    list-style: none;
+    margin: 30px 0 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #A9A9A9; }
+    .list ul .name {
+      font-weight: 800;
+      color: #F16059; }
+    .list ul a {
+      text-decoration: none;
+      display: block;
+      color: black; }
+      .list ul a:hover {
+        color: #F16059; }

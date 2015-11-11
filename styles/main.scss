@@ -63,14 +63,31 @@ input {
   text-align: center;
   margin: 0;
   margin-left: 62%;
-  transition: background 0.5s ease, color 0.5s ease;
+  transition: background 0.5s ease;
   &:hover {
-    background: pink;
-    color: gray;
-    transition: background 0.5s ease, color 0.5s ease;
+    background: #e9a19d;
+    transition: background 0.5s ease;
   }
 }
 
 .list {
   @include span-columns(7 of 12);
+  ul {
+    list-style: none;
+    margin: 30px 0 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #A9A9A9;
+    .name {
+      font-weight: 800;
+      color: #F16059;
+    }
+    a {
+      text-decoration: none;
+      display: block;
+      color: black;
+      &:hover{
+        color: #F16059;
+      }
+    }
+  }
 }
