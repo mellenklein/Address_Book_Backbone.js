@@ -26,16 +26,17 @@ var HomePage = Backbone.View.extend({
   events: {
     'click .home': 'handleHomeClick'
   },
-  handleHomeClick: function(){
-    console.log('you clicked the Home button!');
-    $('.formDisplay').html(form.el);
-    contactList.fetch({
-      success: function(){
-        $('.listDisplay').html(addressBook.el);
-      }
-    });
-  },
+  // handleHomeClick: function(){
+  //   console.log('you clicked the Home button!');
+  //   $('.formDisplay').html(form.el);
+  //   contactList.fetch({
+  //     success: function(){
+  //       $('.listDisplay').html(addressBook.el);
+  //     }
+  //   });
+  // },
   render: function(){
+    console.log('called render home');
     this.$el.html(this.template());
     return this;
   }
@@ -65,12 +66,14 @@ var AddressBook = Backbone.View.extend({
 
   render: function(){
     var view = this;
+    this.$el.html('');
     this.collection.each(function(model){
       var contact = new ContactDetail({
         model: model
       });
       contact.render();
       // console.log(contact.el)
+      // this.$('main').val('');
       view.$el.append(contact.el);
     });
   }
@@ -140,9 +143,30 @@ var Router = Backbone.Router.extend({
     'contact/:id': 'viewContact'
   },
   home: function(){
+    // setup
     var mainView = new HomePage();
+    var contactList = new ContactList();
+    var addressBook = new AddressBook({
+      collection: contactList
+    });
+    var form = new Form();
+
+    // Render
     mainView.render();
-    $('header').html(mainView.el);
+    form.render();
+
+
+    contactList.fetch({
+      success: function(){
+        // Attach to page
+        $('header').html(mainView.el);
+        $('main').html('');
+        $('main').append('<section class="formDisplay"></section>');
+        $('main').append('<section class="listDisplay"></section>');
+        $('.listDisplay').html(addressBook.el);
+        $('.formDisplay').html(form.el);
+      }
+    });
   },
   viewContact(contactId){
     var model = new Contact({
@@ -161,26 +185,7 @@ var Router = Backbone.Router.extend({
 
 
 
-  ///////////////////////////////
- //          RENDERING        //
-///////////////////////////////
 
-
-var contactList = new ContactList();
-
-var addressBook = new AddressBook({
-  collection: contactList
-});
-
-var form = new Form();
-form.render();
-$('.formDisplay').html(form.el);
-
-contactList.fetch({
-  success: function(){
-    $('.listDisplay').html(addressBook.el);
-  }
-});
 
 var router = new Router();
 Backbone.history.start();
