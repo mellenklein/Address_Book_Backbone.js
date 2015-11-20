@@ -63,17 +63,19 @@ var AddressBook = Backbone.View.extend({
     this.listenTo(this.collection, 'fetch sync', this.render);
     // this.listenTo(this.model, 'change', this.render);
   },
-
+  sortedCollection: function() {
+    return _.sortBy(this.collection.models, function(model) {
+      return model.get('firstName').toLowerCase();
+    })
+  },
   render: function(){
     var view = this;
     this.$el.html('');
-    this.collection.each(function(model){
+    this.sortedCollection().forEach(function(model){
       var contact = new ContactDetail({
         model: model
       });
       contact.render();
-      // console.log(contact.el)
-      // this.$('main').val('');
       view.$el.append(contact.el);
     });
   }
@@ -105,17 +107,24 @@ var Form = Backbone.View.extend({
       alert('Email address is required');
       return;
     }
-    var contact = new Contact({
+    this.collection.create({
       firstName: first,
       lastName: last,
       phone: phone,
       email: email,
       twitter: twitter,
       linkedin: linkedin
-    });
-    contact.save();
-
-    contactList.add(contact);
+    })
+    // var contact = new Contact({
+    //   firstName: first,
+    //   lastName: last,
+    //   phone: phone,
+    //   email: email,
+    //   twitter: twitter,
+    //   linkedin: linkedin
+    // });
+    // contact.save();
+    // this.collection.add(contact);
 
     this.$('input').val('');
     alert('Success! Your contact was saved to the address book.');
@@ -149,7 +158,9 @@ var Router = Backbone.Router.extend({
     var addressBook = new AddressBook({
       collection: contactList
     });
-    var form = new Form();
+    var form = new Form({
+      collection: contactList
+    });
 
     // Render
     mainView.render();
